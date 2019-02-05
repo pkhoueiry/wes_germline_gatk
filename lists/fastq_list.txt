@@ -1,0 +1,4 @@
+FC30	/home/pk4/project/test/fastq/FC30_R1.fastq.gz	/home/pk4/project/test/fastq/FC30_R2.fastq.gz
+FC37	/home/pk4/project/test/fastq/FC37_R1.fastq.gz	/home/pk4/project/test/fastq/FC37_R2.fastq.gz
+FC35	/home/pk4/project/test/fastq/FC35_R2.fastq.gz	/home/pk4/project/test/fastq/FC35_R2.fastq.gz
+FC47	/home/pk4/project/test/fastq/FC47_R1.fastq.gz	/home/pk4/project/test/fastq/FC47_R2.fastq.gz
