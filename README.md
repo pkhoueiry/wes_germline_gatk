@@ -29,7 +29,7 @@ the <projectDir> should have the following structure:
             AAAAAAAAAAAA
             TTTTTTTTTTTT
 
-        Second, we have to specify the path of "fastq_list.txt", "scatter_calling_intervals.txt" and "adapters.txt" in the JSON file.
+        We have to specify the path of "fastq_list.txt", scatter_calling_intervals.txt" and "adapters.txt" in the JSON file.
 
 
 We can invoke each WDL and shell scripts separately.
