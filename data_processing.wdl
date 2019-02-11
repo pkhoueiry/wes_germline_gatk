@@ -7,6 +7,8 @@ workflow data_processing{
 
 File FASTQ_LIST
 Array[Array[File]] samples = read_tsv(FASTQ_LIST)
+File adapters
+Array[File] adapters_to_cut = read_lines(adapters)
 File SCATTER_CALLING_INTERVALS_LIST
 Array[File] scatter_intervals = read_lines(SCATTER_CALLING_INTERVALS_LIST)
 File fastqc
@@ -43,7 +45,8 @@ scatter (sample in samples){
             cutadapt = cutadapt,
             fastq1 = sample[1],
             fastq2 = sample[2],
-            sampleName = sample[0]
+            sampleName = sample[0],
+            adapters = adapters
     }
         
     call bwa_mapping{
@@ -137,11 +140,15 @@ task trimming{
     File fastq1
     File fastq2
     String sampleName
+    File adapters
 
     command {
+        firstReadInPair = awk 'NR==1 {print; exit}' adapters
+        secondReadInPair = awk 'NR==2 {print; exit}' adapters
+
         ${cutadapt} \
-        -a CTGTCTCTTGATCACA \
-        -A TGTGATCAAGAGACAG \
+        -a $firstReadInPair \
+        -A $secondReadInPair \
         -m 22 \
         -o ${sampleName}_R1_cutadapt.fastq.gz \
         -p ${sampleName}_R2_cutadapt.fastq.gz \
