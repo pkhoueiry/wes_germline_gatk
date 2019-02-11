@@ -7,8 +7,6 @@ workflow data_processing{
 
 File FASTQ_LIST
 Array[Array[File]] samples = read_tsv(FASTQ_LIST)
-File adapters
-Array[File] adapters_to_cut = read_lines(adapters)
 File SCATTER_CALLING_INTERVALS_LIST
 Array[File] scatter_intervals = read_lines(SCATTER_CALLING_INTERVALS_LIST)
 File fastqc
@@ -45,8 +43,7 @@ scatter (sample in samples){
             cutadapt = cutadapt,
             fastq1 = sample[1],
             fastq2 = sample[2],
-            sampleName = sample[0],
-            adapters = adapters
+            sampleName = sample[0]
     }
         
     call bwa_mapping{
@@ -100,6 +97,7 @@ scatter (interval in scatter_intervals){
             refDict = refDict,
             dedup_bam = MarkDuplicates.bam_dedup,
             dbsnp38 = dbsnp38,
+            samtools = samtools,
             dbsnp38_index = dbsnp38_index,
             phase1snps = phase1snps,
             phase1snps_index = phase1snps_index,
@@ -114,6 +112,7 @@ scatter (interval in scatter_intervals){
             refFasta = refFasta,
             refIndex = refIndex,
             refDict = refDict,
+            samtools = samtools,
             dedup_bam = MarkDuplicates.bam_dedup,
             interval_list = interval,
             bqsr = BaseRecalibrator.baseRecal
@@ -140,15 +139,11 @@ task trimming{
     File fastq1
     File fastq2
     String sampleName
-    File adapters
 
     command {
-        firstReadInPair = awk 'NR==1 {print; exit}' adapters
-        secondReadInPair = awk 'NR==2 {print; exit}' adapters
-
         ${cutadapt} \
-        -a $firstReadInPair \
-        -A $secondReadInPair \
+        -a CTGTCTCTTGATCACA \
+        -A TGTGATCAAGAGACAG \
         -m 22 \
         -o ${sampleName}_R1_cutadapt.fastq.gz \
         -p ${sampleName}_R2_cutadapt.fastq.gz \
@@ -182,9 +177,9 @@ task bwa_mapping{
             -t 20 \
             ${ref} \
             ${fastq1_cutadapt} ${fastq2_cutadapt} \
-            | ${samtools} view -@ 20 -bSho - | samtools sort -@ 20 - -o ${sampleName}.bam
+            | ${samtools} view -@ 20 -bSho - | ${samtools} sort -@ 20 - -o ${sampleName}.bam
 
-        samtools index -@ 2 ${sampleName}.bam
+        ${samtools} index -@ 2 ${sampleName}.bam
     }
 
     output {
@@ -253,6 +248,7 @@ task BaseRecalibrator{
     File refFasta
     File refIndex
     File refDict
+    File samtools
     Array[File] dedup_bam
     File dbsnp38
     File dbsnp38_index
@@ -264,7 +260,7 @@ task BaseRecalibrator{
 
     command {
     for file in ${sep=' ' dedup_bam}; do
-        samtools index -@ 2 $file
+        ${samtools} index -@ 2 $file
         
         filename=$(basename $file)
         output_filename=$(echo "$filename" | cut -f 1 -d '_')
@@ -294,6 +290,7 @@ task applyBQSR{
     Array[File] dedup_bam
     File interval_list
     Array[File] bqsr
+    File samtools
 
     command {
     for file in ${sep=' ' dedup_bam}; do
@@ -307,7 +304,7 @@ task applyBQSR{
 
             if [ "$output_filename" = "$output_filename1" ]; then
             
-            samtools index -@ 2 $file
+            ${samtools} index -@ 2 $file
             
             java -jar ${gatk} ApplyBQSR \
                 -R ${refFasta} \
