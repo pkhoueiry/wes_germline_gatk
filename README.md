@@ -22,7 +22,7 @@ the <projectDir> should have the following structure:
             path/to/intervals/scattered_calling_intervals/temp_0004_of_50/scattered.interval_list
             path/to/intervals/scattered_calling_intervals/temp_0005_of_50/scattered.interval_list
 
-        Second, we have to specify the path of both "fastq_list.txt" and "scatter_calling_intervals.txt" in the JSON file.
+        Second, we have to specify the path of "fastq_list.txt", "scatter_calling_intervals.txt" and "adapters.txt" in the JSON file.
 
         Finally, we have to specify adapters in case we choose to do read trimming.
         In the first line we put the adapter to be trimmed from the first read (forward) and the second line the adapter to be trimmed from the second read (reverse).
