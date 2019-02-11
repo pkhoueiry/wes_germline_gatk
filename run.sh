@@ -20,12 +20,26 @@ if [ ! -d "${projectDir}"/fastq ] || [ ! -d "${projectDir}"/lists ]; then
     exit 1
 else {
     time (
+    read -p 'Do you want to perform read trimming? (Y|N): ' choice
+    
+    if [ "$choice" = "Y" ] || [ "$choice" = "y" ] || [ "$choice" = "Yes" ] || [ "$choice" = "yes" ] || [ "$choice" = "YES" ]; then
+    printf -- '\033[33m You have chosen to trim adapters... \033[0m\n';
 
     java -jar ~/software/cromwell-36.jar \
         run ~/scripts/wes-germline-scatter-gather/data_processing.wdl \
         --inputs ~/scripts/wes-germline-scatter-gather/bwa_and_gatk_wdl.json
 
     wait
+    
+    else
+    printf -- '\033[33m Trimming skipped... \033[0m\n';
+
+    java -jar ~/software/cromwell-36.jar \
+        run ~/scripts/wes-germline-scatter-gather/data_processing_without_trimming.wdl \
+        --inputs ~/scripts/wes-germline-scatter-gather/bwa_and_gatk_wdl.json
+
+    wait
+    fi
     
     ~/scripts/wes-germline-scatter-gather/preparing_bams.sh ${projectDir}
 
