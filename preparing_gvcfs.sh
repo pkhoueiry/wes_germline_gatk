@@ -49,11 +49,17 @@ done
 #get samples names
 cut -f 1 ${projectDir}/lists/fastq_list.txt > ${projectDir}/lists/samples_names.txt
 
+#from the list created above, we just split each sample in a text file
 while IFS= read -r line; do
-    grep "$line" ${projectDir}/lists/gvcfs.txt >> ${projectDir}/lists/$line.list; 
+	line+=".g.vcf"	
+	grep -F "${line}" ${projectDir}/lists/gvcfs.txt >> ${projectDir}/lists/$line.list;
 done < ${projectDir}/lists/samples_names.txt
 
-#from the list created above, we just split each sample in a text file
+for f in ${projectDir}/lists/*.g.vcf.list; do 
+        bn=$(basename $f | cut -f 1 -d"."); mv $f ${projectDir}/lists/$bn.list;
+done
+
+#creating list of lists
 for f in ${projectDir}/lists/*.list ; do
     echo $f >> ${projectDir}/lists/gvcfs_samples_lists.list
 done

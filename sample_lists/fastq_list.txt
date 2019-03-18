@@ -1,0 +1,4 @@
+FC30	/data/fastq/FC30_R1.fastq.gz	/data/fastq/FC30_R2.fastq.gz
+FC37	/data/fastq/FC37_R1.fastq.gz	/data/fastq/FC37_R2.fastq.gz
+FC35	/data/fastq/FC35_R1.fastq.gz	/data/fastq/FC35_R2.fastq.gz
+FC47	/data/fastq/FC47_R1.fastq.gz	/data/fastq/FC47_R2.fastq.gz

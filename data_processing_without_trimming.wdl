@@ -231,7 +231,7 @@ task BaseRecalibrator{
 
     command {
     for file in ${sep=' ' dedup_bam}; do
-        ${samtools} index -@ 2 $file
+        ${samtools} index -@ 5 $file
         
         filename=$(basename $file)
         output_filename=$(echo "$filename" | cut -f 1 -d '_')

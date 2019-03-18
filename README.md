@@ -6,7 +6,7 @@ the <projectDir> should have the following structure:
     1- "fastq" directory which contains FASTQ files. FASTQ files should have the following naming style:
         sampleName_R1.fastq.gz and sampleName_R2.fastq.gz
     
-    2- "lists" directory which contains three txt files:
+    2- "lists" directory which contains two txt files:
         - "fastq_list.txt"
         - "scatter_calling_intervals.txt"
         - "adapters.txt"
@@ -22,15 +22,15 @@ the <projectDir> should have the following structure:
             path/to/intervals/scattered_calling_intervals/temp_0004_of_50/scattered.interval_list
             path/to/intervals/scattered_calling_intervals/temp_0005_of_50/scattered.interval_list
 
-            "adapters.txt" should hold adapters to be trimmed.
-            first line should contain first read adapter (forward) and the second
-            line should contain second read adapter (reverse)
+            "adapters.txt"
+            this file should contain adapters that should be trimmed from fastq files.
+            first line should have first read adapter (forward).
+            second line should have second read adapter (reverse).
 
             AAAAAAAAAAAA
             TTTTTTTTTTTT
 
-        We have to specify the path of "fastq_list.txt", scatter_calling_intervals.txt" and "adapters.txt" in the JSON file.
-
+        Finally, we have to specify the path of both "fastq_list.txt", "scatter_calling_intervals.txt" and "adapters.txt" in the JSON file
 
 We can invoke each WDL and shell scripts separately.
 

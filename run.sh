@@ -20,50 +20,49 @@ if [ ! -d "${projectDir}"/fastq ] || [ ! -d "${projectDir}"/lists ]; then
     exit 1
 else {
     time (
-    read -p 'Do you want to perform read trimming? (Y|N): ' choice
-    
+
+    #read -p 'Any adapters to trim?(Y/N): ' choice
+
     if [ "$choice" = "Y" ] || [ "$choice" = "y" ] || [ "$choice" = "Yes" ] || [ "$choice" = "yes" ] || [ "$choice" = "YES" ]; then
     printf -- '\033[33m You have chosen to trim adapters... \033[0m\n';
 
-    java -jar ~/software/cromwell-36.jar \
-        run ~/scripts/wes-germline-scatter-gather/data_processing.wdl \
-        --inputs ~/scripts/wes-germline-scatter-gather/bwa_and_gatk_wdl.json
+    java -jar /home/software/cromwell/cromwell-36.jar \
+        run /home/scripts/wes-germline-scatter-gather/data_processing.wdl \
+        --inputs /home/scripts/wes-germline-scatter-gather/bwa_and_gatk_wdl.json
 
     wait
     
     else
-    printf -- '\033[33m Trimming skipped... \033[0m\n';
-
-    java -jar ~/software/cromwell-36.jar \
-        run ~/scripts/wes-germline-scatter-gather/data_processing_without_trimming.wdl \
-        --inputs ~/scripts/wes-germline-scatter-gather/bwa_and_gatk_wdl.json
+    printf -- '\033[33m Skipping adapters trimming... \033[0m\n';
+    
+    java -jar /home/software/cromwell/cromwell-36.jar \
+        run /home/scripts/wes-germline-scatter-gather/data_processing_without_trimming.wdl \
+        --inputs /home/scripts/wes-germline-scatter-gather/bwa_and_gatk_wdl.json
 
     wait
     fi
-    
-    ~/scripts/wes-germline-scatter-gather/preparing_bams.sh ${projectDir}
+
+    /home/scripts/wes-germline-scatter-gather/preparing_bams.sh ${projectDir}
 
     wait
 
-    java -jar ~/software/cromwell-36.jar \
-        run ~/scripts/wes-germline-scatter-gather/gatk_variant_calling.wdl \
-        --inputs ~/scripts/wes-germline-scatter-gather/bwa_and_gatk_wdl.json
+    java -jar /home/software/cromwell/cromwell-36.jar \
+        run /home/scripts/wes-germline-scatter-gather/gatk_variant_calling.wdl \
+        --inputs /home/scripts/wes-germline-scatter-gather/bwa_and_gatk_wdl.json
 
     wait
 
-    ~/scripts/wes-germline-scatter-gather/preparing_gvcfs.sh ${projectDir}
+    /home/scripts/wes-germline-scatter-gather/preparing_gvcfs.sh ${projectDir}
 
     wait
 
-    java -jar ~/software/cromwell-36.jar \
-        run ~/scripts/wes-germline-scatter-gather/gathering_and_genotyping.wdl \
-        --inputs ~/scripts/wes-germline-scatter-gather/bwa_and_gatk_wdl.json
+    java -jar /home/software/cromwell/cromwell-36.jar \
+        run /home/scripts/wes-germline-scatter-gather/gathering_and_genotyping.wdl \
+        --inputs /home/scripts/wes-germline-scatter-gather/bwa_and_gatk_wdl.json
 
     wait
 
     rm -rf ${projectDir}/allgvcfs/
-    exit 0
-    printf -- '\033[32m Success - the end \033[0m\n';
         )
     }
 fi

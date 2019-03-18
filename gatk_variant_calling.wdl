@@ -38,6 +38,7 @@ scatter (interval in scatter_intervals){
             refFasta = refFasta, 
             refIndex = refIndex, 
             refDict = refDict,
+            samtools = samtools,
             interval_list = interval,
             recal_bam = BAM_FILE_LIST
   }
@@ -115,10 +116,11 @@ task haplotypeCaller {
     File refDict
     Array[File] recal_bam
     File interval_list
+    File samtools
   
     command {
     for file in ${sep=' ' recal_bam}; do
-        samtools index -@ 2 $file
+        ${samtools} index -@ 2 $file
         
         filename=$(basename $file)
         output_filename=$(echo "$filename" | cut -f 1 -d '_')
