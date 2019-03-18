@@ -30,8 +30,7 @@ the <projectDir> should have the following structure:
             AAAAAAAAAAAA
             TTTTTTTTTTTT
 
-        Finally, we have to specify the path of "fastq_list.txt", "scatter_calling_intervals.txt" and "adapters.txt" in the JSON file 
-        IF you need to run this pipeline from outside the Docker*
+        We have to specify the path of all resources in the JSON file if this pipeline is used outside the Docker.*
 
 We can invoke each WDL and shell scripts separately.
 
