@@ -1,4 +1,4 @@
-WES Germline scatter-gather pipeline
+WES Germline scatter-gather pipeline  
 This pipeline runs by just invoking `run.sh /path/to/projectDir` in command line.  
 the projectDir should have the following structure:  
 
