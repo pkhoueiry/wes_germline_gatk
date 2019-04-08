@@ -8,9 +8,9 @@ the `projectDir` should have the following structure:
     sampleName_R1.fastq.gz and sampleName_R2.fastq.gz
 
 2- "lists" directory which contains two txt files:
-    -"fastq_list.txt"
-    -"scatter_calling_intervals.txt"
-    -"adapters.txt"
+        -"fastq_list.txt"
+        -"scatter_calling_intervals.txt"
+        -"adapters.txt"
 
         "fastq_list.txt" is a tab separated file and should contain all samples required for analysis:
             sampleName1    sampleName1_R1.fastq.gz    sampleName1_R2.fastq.gz
