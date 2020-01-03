@@ -23,7 +23,7 @@ if [ ! -d "${projectDir}"/fastq ] || [ ! -d "${projectDir}"/lists ]; then
 else {
     time (
 
-    #read -p 'Any adapters to trim?(Y/N): ' choice
+    read -p 'Any adapters to trim?(Y/N): ' choice
 
     if [ "$choice" = "Y" ] || [ "$choice" = "y" ] || [ "$choice" = "Yes" ] || [ "$choice" = "yes" ] || [ "$choice" = "YES" ]; then
     printf -- '\033[33m You have chosen to trim adapters... \033[0m\n';
