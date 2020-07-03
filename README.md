@@ -63,7 +63,7 @@ the `projectDir` should have the following structure:
 
 &ensp;&ensp;&ensp;&ensp;**3) adapters.txt** Contains adapters to be trimmed: 
 
-	The first line should contain first read adapter (forward) and the second
+        The first line should contain first read adapter (forward) and the second
         line should contain second read adapter (reverse):
 
         CTGTCTCTTGATCACA
