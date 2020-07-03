@@ -63,8 +63,12 @@ the `projectDir` should have the following structure:
 
 &ensp;&ensp;&ensp;&ensp;**3) adapters.txt** Contains adapters to be trimmed: 
 
-	    The first line should contain first read adapter (forward) and the second
-        line should contain second read adapter (reverse) 
+	The first line should contain first read adapter (forward) and the second
+        line should contain second read adapter (reverse):
+
+        CTGTCTCTTGATCACA
+        TGTGATCAAGAGACAG
+
 
 To run the pipeline, you must specify full paths for each tool and database in the JSON file. Once done, you can invoke the pipeline using the following command:  
 
