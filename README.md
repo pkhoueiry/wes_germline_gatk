@@ -1,9 +1,16 @@
 ## Whole Exome Sequencing Pipeline - Germline Analysis
 #### Using the Scatter-Gather technique provided by Broad Institute
   
-Whole Exome Sequencing (WES) pipelines are built using WDL scripts (Workflow Description Language) provided by Broad Institute. 
+This repository contains an implementation of the Whole Exome Sequencing (WES) pipeline based on GATK best practices workflows using WDL scripts (Workflow Description Language).
 
-The pipelines follow the best practices proposed by Broad Institute and use open-source state-of-the-art tools. The following diagram summarizes the germline and somatic analysis (tumor only and tumor/normal):
+
+1) Optimized to run samples in parallel
+2) The Docker version allow users to chose the number of samples to run in parallel based on available resources (threads and memory)
+3) WDL and JSON made easy by removing "unecessary statements"
+4) Single line command to run the whole pipeline (QC, trimming, mapping, markduplicates, base recalibration, variant calling, annotation)
+
+The diagram below summarizes the germline and somatic analysis (tumor only or tumor/normal).
+
 
 ![alt text](wes_workflow/wes_pipelines.png "Whole Exome Sequencing Pipelines")
 
